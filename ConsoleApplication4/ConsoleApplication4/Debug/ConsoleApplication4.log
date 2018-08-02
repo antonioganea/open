@@ -1,7 +1,0 @@
-﻿  lexer.cpp
-c:\users\zenibryum\source\repos\consoleapplication4\consoleapplication4\lexer.cpp(396): warning C4005: 'yywrap': macro redefinition
-  c:\users\zenibryum\source\repos\consoleapplication4\consoleapplication4\lexer.cpp(74): note: see previous definition of 'yywrap'
-  parser.cpp
-  Source.cpp
-  Generating Code...
-  ConsoleApplication4.vcxproj -> C:\Users\Zenibryum\source\repos\ConsoleApplication4\Debug\ConsoleApplication4.exe
