@@ -1,0 +1,10 @@
+import myfile "file.png" as RGB
+
+RGB doarVerde ( RGB pixel ){
+	pixel.R = 0
+	pixel.B = 0
+}
+
+filter ( myfile, doarVerde )
+
+export myfile "file.png" as RGB

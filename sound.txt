@@ -1,0 +1,11 @@
+write "What is the name of the file?"
+read filename
+
+import myfile "file.wav" as waveform-16
+
+waveform-16 amplify ( waveform-16 amplitude ){
+	amplitude -> amplitude * 2.0f
+}
+
+filter ( myfile, amplify )
+export myfile "file.png" as waveform-16
