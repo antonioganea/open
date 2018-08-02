@@ -1,0 +1,7 @@
+ConsoleApplication4\Debug\*
+ConsoleApplication4\ConsoleApplication4\Debug\*
+bin
+obj
+*.layout
+*.depend
+ConsoleApplication4\.vs\*

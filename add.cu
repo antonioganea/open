@@ -1,11 +1,12 @@
 #include <iostream>
 #include <math.h>
 // Kernel function to add the elements of two arrays
+
 __global__
 void add(int n, float *x, float *y)
 {
   for (int i = 0; i < n; i++)
-    y[i] = x[i] + y[i];
+    y[i] = x[i] * y[i];
 }
 
 int main(void)
@@ -20,7 +21,7 @@ int main(void)
   // initialize x and y arrays on the host
   for (int i = 0; i < N; i++) {
     x[i] = 1.0f;
-    y[i] = 2.0f;
+    y[i] = 4.5f;
   }
 
   // Run kernel on 1M elements on the GPU
@@ -32,12 +33,12 @@ int main(void)
   // Check for errors (all values should be 3.0f)
   float maxError = 0.0f;
   for (int i = 0; i < N; i++)
-    maxError = fmax(maxError, fabs(y[i]-3.0f));
+    maxError = fmax(maxError, fabs(y[i]));
   std::cout << "Max error: " << maxError << std::endl;
 
   // Free memory
   cudaFree(x);
   cudaFree(y);
-  
+
   return 0;
 }

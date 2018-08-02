@@ -1,10 +1,10 @@
-import myfile "file.png" as RGB
+import myfile "file.png" as RGB // import into vector
 
-RGB doarVerde ( RGB pixel ){
-	pixel.R = 0
-	pixel.B = 0
-}
+// kernel
+RGB doarVerde ( RGB pixel )
+	pixel.R -> 0
+	pixel.B -> 0
 
-filter ( myfile, doarVerde )
+myfile # doarVerde
 
 export myfile "file.png" as RGB
