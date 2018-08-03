@@ -18,7 +18,7 @@ NUMB	([0-9]+)|([0-9]*\.[0-9]+)
 %%
 
 {NUMB}			{ yylval.intValue = atoi(yytext); return NUM; }
-[+*/()-\[\]]		{ return yytext[0]; }
+[+*/()-\[\]]	{ return yytext[0]; }
 [\n]			{ return '\n'; }
 [ \t]			{ /* empty */ }
 "quit"			{ yyterminate(); }
@@ -32,6 +32,10 @@ NUMB	([0-9]+)|([0-9]*\.[0-9]+)
 "into"			{ return INTO; }
 "dump"			{ return DUMP; }
 "write"			{ return WRITE; }
+"test"			{ return TEST; }
+"->"			{ return RIGHT_ARROW; }
+"filter"		{ return FILTER; }
+":"				{ return SEMI; }
 [a-zA-Z_][a-zA-Z0-9_]*   { yylval.stringValue = strdup(yytext); return IDENTIFIER; }
 [a-zA-Z_][a-zA-Z0-9.]*   { yylval.stringValue = strdup(yytext); return FILENAME; }
 .				/* nothing, eat up */

@@ -8,6 +8,8 @@
 
 	#include <map>
 
+	#include "output.h"
+
 	#pragma warning (disable: 4005)
 	
 	// this function will be generated
@@ -76,6 +78,10 @@
 %token DUMP
 %token FILENAME
 %token WRITE
+%token TEST
+%token FILTER
+%token RIGHT_ARROW
+%token SEMI
 
 %union
 {
@@ -99,6 +105,15 @@ line: '\n'
 	;
 	
 myrule: DEFKEYWORD NUM NUM	{ cout << "Defining " << $<intValue>2 << " as " << $<intValue>3 << endl; testVector[$<intValue>2] = $<intValue>3; };
+	  | TEST { }
+	  | FILTER IDENTIFIER SEMI IDENTIFIER IDENTIFIER RIGHT_ARROW exp { 
+		/*ScriptOutput::printInGlobal();
+		cout << "void " << $<stringValue>2 << "(int n, float *" << $<stringValue>4 << ", float *" << $<stringValue>5 << "){" << endl;
+		cout << "int index = blockIdx.x * blockDim.x + threadIdx.x;" << endl;
+		cout << "int stride = blockDim.x * gridDim.x;" << endl;
+		cout << "for (int i = index; i < n; i += stride)" << endl;
+		cout << "	" << $<stringValue>4 << "[i] = " << $<stringValue>8 << ";" << endl << "}" << endl;*/
+		}
 	  | SHOWKEYWORD IDENTIFIER { cout << varnames.find($<stringValue>2)->second << endl; }
 	  | INIT IDENTIFIER { cout << "Inited " << $<stringValue>2 << endl;
 						  varnames.insert(pair<string, int>($<stringValue>2, 0));
