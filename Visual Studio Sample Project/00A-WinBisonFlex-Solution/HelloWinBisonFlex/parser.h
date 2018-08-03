@@ -53,7 +53,10 @@ extern int yydebug;
     INIT = 263,
     ASSIGN = 264,
     ARRAY = 265,
-    POPULATE = 266
+    READ = 266,
+    INTO = 267,
+    DUMP = 268,
+    FILENAME = 269
   };
 #endif
 
@@ -62,13 +65,13 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 45 "parser.y" /* yacc.c:1909  */
+#line 66 "parser.y" /* yacc.c:1909  */
 
     int intValue;
     float floatValue;
     char *stringValue;
 
-#line 72 "parser.h" /* yacc.c:1909  */
+#line 75 "parser.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
