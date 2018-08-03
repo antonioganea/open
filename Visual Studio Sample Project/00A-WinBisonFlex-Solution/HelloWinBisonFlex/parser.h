@@ -61,7 +61,10 @@ extern int yydebug;
     TEST = 271,
     FILTER = 272,
     RIGHT_ARROW = 273,
-    SEMI = 274
+    SEMI = 274,
+    INITIALIZE = 275,
+    FREE = 276,
+    APPLY = 277
   };
 #endif
 
@@ -70,13 +73,13 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 87 "parser.y" /* yacc.c:1909  */
+#line 89 "parser.y" /* yacc.c:1909  */
 
     int intValue;
     float floatValue;
     char *stringValue;
 
-#line 80 "parser.h" /* yacc.c:1909  */
+#line 83 "parser.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

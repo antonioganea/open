@@ -9,10 +9,8 @@ class ScriptOutput {
 public:
 	static FILE * fout;
 
-	static std::stringstream globalScript;
-	static std::stringstream mainScript;
-	static std::streambuf * old;
-
+	static char * globalBuffer[10000];
+	static char * mainBuffer[10000];
 	
 
 	static void printInGlobal();

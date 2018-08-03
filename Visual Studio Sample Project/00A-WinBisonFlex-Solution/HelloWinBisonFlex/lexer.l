@@ -36,6 +36,9 @@ NUMB	([0-9]+)|([0-9]*\.[0-9]+)
 "->"			{ return RIGHT_ARROW; }
 "filter"		{ return FILTER; }
 ":"				{ return SEMI; }
+"initialize"	{ return INITIALIZE; }
+"free"			{ return FREE; }
+"apply"			{ return APPLY; }
 [a-zA-Z_][a-zA-Z0-9_]*   { yylval.stringValue = strdup(yytext); return IDENTIFIER; }
 [a-zA-Z_][a-zA-Z0-9.]*   { yylval.stringValue = strdup(yytext); return FILENAME; }
 .				/* nothing, eat up */

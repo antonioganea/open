@@ -8,7 +8,7 @@
 
 	#include <map>
 
-	#include "output.h"
+	//#include "output.h"
 
 	#pragma warning (disable: 4005)
 	
@@ -33,21 +33,20 @@
 	std::map<std::string, int*> pointernames;
 
 
-	#include <fstream>
-
 	void readData( string filePath, int maxNumbers, int* buffer ){
-		ifstream iFile(filePath);
-		int x;
-		if( iFile.eof() ) return;
+		FILE * pFile;
 		int i = 0;
-		while (i < maxNumbers) {
-			iFile >> x;
-			//cout << x << endl;
-			buffer[i] = x;
-			if( iFile.eof() ) break;
+		fopen_s(&pFile,filePath.c_str(), "r");
+
+		while ( i < maxNumbers )
+		{
+			int number;
+			if (fscanf(pFile, "%d", &number) != 1)
+				break;        // file finished or there was an error
+			buffer[i] = number;
 			i++;
 		}
-		iFile.close();
+		fclose(pFile);
 	}
 
 	void writeData( string filePath, int maxNumbers, int* buffer ){
@@ -82,6 +81,9 @@
 %token FILTER
 %token RIGHT_ARROW
 %token SEMI
+%token INITIALIZE
+%token FREE
+%token APPLY
 
 %union
 {
@@ -119,28 +121,30 @@ myrule: DEFKEYWORD NUM NUM	{ cout << "Defining " << $<intValue>2 << " as " << $<
 						  varnames.insert(pair<string, int>($<stringValue>2, 0));
 						}
 	  | ASSIGN IDENTIFIER NUM { varnames.find($<stringValue>2)->second = $<intValue>3; }
-	  | ARRAY IDENTIFIER NUM {	int * pointer = new int[$<intValue>3];
-								pointernames.insert(pair<string, int*>($<stringValue>2, pointer));
-								cout << "Allocated " << $<intValue>3 << " integers! " << pointer << endl;
+	  | ARRAY IDENTIFIER NUM {	cout << "float * " << $<stringValue>2 << ";" << endl;
+								cout << "cudaMallocManaged(&" << $<stringValue>2 << ", " << $<intValue>3 << "*sizeof(float));" << endl;
 							 }
-	  | READ FILENAME INTO IDENTIFIER  {	
-											cout << "reading " << $<stringValue>2 << " into " << $<stringValue>4 << endl;
-											int* localintptr = pointernames.find($<stringValue>4)->second;
-											readData( $<stringValue>2, 100, localintptr );
-										}
-	  | WRITE IDENTIFIER INTO FILENAME {
-											cout << "writing" << $<stringValue>2 << " into " << $<stringValue>4 << endl;
-											int* localintptr = pointernames.find($<stringValue>2)->second;
-											writeData( $<stringValue>4, 100, localintptr );
-									   }
+	  | FREE IDENTIFIER {	cout << "cudaFree(" << $<stringValue>2 << ");" << endl; }
+	  | READ FILENAME INTO IDENTIFIER  {	cout << "readData( \"" << $<stringValue>2 << "\", 10000, " << $<stringValue>4 << " );" << endl; }
+	  | WRITE IDENTIFIER INTO FILENAME {	cout << "writeData( \"" << $<stringValue>4 << "\", 10000, " << $<stringValue>2 << " );" << endl; }
 	  | IDENTIFIER '[' NUM ']' { int* localintptr = pointernames.find($<stringValue>1)->second;
 								cout << $<stringValue>1 << "[" << $<intValue>3 << "] = " << localintptr[$<intValue>3] << endl;
 							   }
-	  | DUMP IDENTIFIER {int* localintptr = pointernames.find($<stringValue>2)->second;
-						for ( int i = 0; i < 9; i++ )
-							cout << '	' << localintptr[i] << endl;
+	  | DUMP IDENTIFIER {	cout << "for ( int i = 0; i < 10000; i++ )" << endl;
+							cout << "	cout << " << $<stringValue>2 <<"[i];" << endl;
 	  
 						}
+
+	  | APPLY IDENTIFIER IDENTIFIER IDENTIFIER {
+	  	cout << "{ int blockSize = 256;" << endl;
+		cout << "int numBlocks = ( 10000 + blockSize - 1) / blockSize;\n";
+		cout << $<stringValue>2 << "<<<numBlocks, blockSize>>>( 10000, " << $<stringValue>3 << ", " << $<stringValue>4 << " ); \n}\n";
+		cout << "cudaDeviceSynchronize();" << endl;
+	  }
+
+	  | INITIALIZE IDENTIFIER NUM { cout << "for ( int i = 0; i < 10000; i++ )" << endl;
+		cout << "	" << $<stringValue>2 << "[i] = " << $<intValue>1 << ".0f;" << endl;
+	  }
 	  | IDENTIFIER { cout << $<stringValue>1 << endl; }
 	  ;
 

@@ -1,4 +1,4 @@
-#include "output.h"
+/*#include "output.h"
 
 #include "string.h"
 
@@ -13,4 +13,4 @@ void ScriptOutput::printInGlobal() {
 }
 void ScriptOutput::printInMain() {
 	std::cout.rdbuf(mainScript.rdbuf());
-}
+}*/
