@@ -31,6 +31,7 @@ NUMB	([0-9]+)|([0-9]*\.[0-9]+)
 "read"			{ return READ; }
 "into"			{ return INTO; }
 "dump"			{ return DUMP; }
+"write"			{ return WRITE; }
 [a-zA-Z_][a-zA-Z0-9_]*   { yylval.stringValue = strdup(yytext); return IDENTIFIER; }
 [a-zA-Z_][a-zA-Z0-9.]*   { yylval.stringValue = strdup(yytext); return FILENAME; }
 .				/* nothing, eat up */

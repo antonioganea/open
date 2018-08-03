@@ -45,6 +45,20 @@
 			if( iFile.eof() ) break;
 			i++;
 		}
+		iFile.close();
+	}
+
+	void writeData( string filePath, int maxNumbers, int* buffer ){
+		FILE * pFile;
+		int i = 0;
+		fopen_s(&pFile,filePath.c_str(), "w");
+
+		while ( i < maxNumbers )
+		{
+			fprintf(pFile, "%d ", buffer[i]);
+			i++;
+		}
+		fclose(pFile);
 	}
 
 %}
@@ -61,6 +75,7 @@
 %token INTO
 %token DUMP
 %token FILENAME
+%token WRITE
 
 %union
 {
@@ -98,10 +113,15 @@ myrule: DEFKEYWORD NUM NUM	{ cout << "Defining " << $<intValue>2 << " as " << $<
 											int* localintptr = pointernames.find($<stringValue>4)->second;
 											readData( $<stringValue>2, 100, localintptr );
 										}
+	  | WRITE IDENTIFIER INTO FILENAME {
+											cout << "writing" << $<stringValue>2 << " into " << $<stringValue>4 << endl;
+											int* localintptr = pointernames.find($<stringValue>2)->second;
+											writeData( $<stringValue>4, 100, localintptr );
+									   }
 	  | IDENTIFIER '[' NUM ']' { int* localintptr = pointernames.find($<stringValue>1)->second;
 								cout << $<stringValue>1 << "[" << $<intValue>3 << "] = " << localintptr[$<intValue>3] << endl;
 							   }
-	  | DUMP IDENTIFIER {int* localintptr = pointernames.find($<stringValue>1)->second;
+	  | DUMP IDENTIFIER {int* localintptr = pointernames.find($<stringValue>2)->second;
 						for ( int i = 0; i < 9; i++ )
 							cout << '	' << localintptr[i] << endl;
 	  
