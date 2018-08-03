@@ -22,7 +22,7 @@ int main()
 
 	fopen_s(&fin, "input.q", "r");
 
-	freopen("myfile2.txt", "w", stdout);
+	freopen("output.cu", "w", stdout);
 
 
 	FILE *f = fopen("beginning.txt", "rb");

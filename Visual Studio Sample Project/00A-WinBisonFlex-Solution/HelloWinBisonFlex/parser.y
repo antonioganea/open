@@ -131,7 +131,7 @@ myrule: DEFKEYWORD NUM NUM	{ cout << "Defining " << $<intValue>2 << " as " << $<
 								cout << $<stringValue>1 << "[" << $<intValue>3 << "] = " << localintptr[$<intValue>3] << endl;
 							   }
 	  | DUMP IDENTIFIER {	cout << "for ( int i = 0; i < 10000; i++ )" << endl;
-							cout << "	cout << " << $<stringValue>2 <<"[i];" << endl;
+							cout << "	printf(\"%d \", " << $<stringValue>2 <<");" << endl;
 	  
 						}
 

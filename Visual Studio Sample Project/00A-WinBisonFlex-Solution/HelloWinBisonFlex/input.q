@@ -2,6 +2,7 @@ array a 10000
 array b 10000
 
 initialize b 5
+initialize a 3
 
 read valuesA.txt into a
 write a into valuesC.txt

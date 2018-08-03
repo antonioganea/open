@@ -1387,7 +1387,7 @@ yyreduce:
   case 18:
 #line 133 "parser.y" /* yacc.c:1646  */
     {	cout << "for ( int i = 0; i < 10000; i++ )" << endl;
-							cout << "	cout << " << (yyvsp[0].stringValue) <<"[i];" << endl;
+							cout << "	printf(\"%d \", " << (yyvsp[0].stringValue) <<");" << endl;
 	  
 						}
 #line 1394 "parser.cpp" /* yacc.c:1646  */

@@ -68,3 +68,24 @@ void writeData( char *filePath, int maxNumbers, float* buffer ){
 
 int main(void)
 {
+float * a;
+cudaMallocManaged(&a, 10000*sizeof(float));
+float * b;
+cudaMallocManaged(&b, 10000*sizeof(float));
+for ( int i = 0; i < 10000; i++ )
+	b[i] = 10000.0f;
+for ( int i = 0; i < 10000; i++ )
+	a[i] = 5.0f;
+readData( "valuesA.txt", 10000, a );
+writeData( "valuesC.txt", 10000, a );
+{ int blockSize = 256;
+int numBlocks = ( 10000 + blockSize - 1) / blockSize;
+add<<<numBlocks, blockSize>>>( 10000, a, b ); 
+}
+cudaDeviceSynchronize();
+for ( int i = 0; i < 10000; i++ )
+	printf("%d ", a);
+cudaFree(a);
+cudaFree(b);
+return 0;
+}
