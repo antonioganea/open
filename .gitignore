@@ -4,3 +4,18 @@ bin
 obj
 *.layout
 *.depend
+Visual Studio Sample Project\00A-WinBisonFlex-Solution\x64\Debug
+Visual Studio Sample Project\00A-WinBisonFlex-Solution\.vs
+Visual Studio Sample Project\00A-WinBisonFlex-Solution\.vs\00A-WinBisonFlex-Solution\v15
+Visual Studio Sample Project\00A-WinBisonFlex-Solution\HelloWinBisonFlex\x64\Debug
+*.tlog
+*.pdb
+*.ilk
+*.obj
+*.exe
+*.user
+*.suo
+*.db
+*.idb
+*.ipch
+*.log
